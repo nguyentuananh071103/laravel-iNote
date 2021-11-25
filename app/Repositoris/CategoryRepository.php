@@ -35,15 +35,4 @@ class CategoryRepository
         return $category;
     }
 
-    public function update($request, $id)
-    {
-        Category::query()->findOrFail($id);
-        $data = $request->only('name','description','image');
-        $image = $request->file('file');
-        $data['image'] = time() . '.' . $image->getClientOriginalExtension();
-        $path = public_path('img');
-        $image->move($path, $data['image']);
-        return Category::query()->where("id", "=", $id)->update($data);
-    }
-
 }
